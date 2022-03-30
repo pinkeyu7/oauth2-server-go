@@ -4,7 +4,7 @@ import (
 	"oauth2-server-go/dto/apireq"
 	"oauth2-server-go/dto/apires"
 	"oauth2-server-go/dto/model"
-	oauthClient "oauth2-server-go/internal/oauth2/client"
+	oauthClient "oauth2-server-go/internal/oauth/client"
 )
 
 type Service struct {
