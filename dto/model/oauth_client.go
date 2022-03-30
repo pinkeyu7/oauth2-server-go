@@ -14,3 +14,13 @@ type OauthClient struct {
 	CreatedAt    time.Time `xorm:"not null created DATETIME" json:"created_at"`
 	UpdatedAt    time.Time `xorm:"not null updated DATETIME" json:"updated_at"`
 }
+
+type OauthClientRedisCache struct {
+	ClientID            []string `json:"client_id"`
+	CodeChallenge       []string `json:"code_challenge"`
+	CodeChallengeMethod []string `json:"code_challenge_method"`
+	RedirectURI         []string `json:"redirect_uri"`
+	ResponseType        []string `json:"response_type"`
+	Scope               []string `json:"scope"`
+	State               []string `json:"state"`
+}

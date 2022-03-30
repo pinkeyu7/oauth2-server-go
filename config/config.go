@@ -28,6 +28,13 @@ var EnvShortName = map[string]string{
 	EnvLocalhost:   "local",
 }
 
+var HtmlBasePath = map[string]string{
+	EnvProduction:  "https://oauth.indochat.net/",
+	EnvStaging:     "https://oauth-staging.indochat.net/",
+	EnvDevelopment: "https://oauth-development.indochat.net/",
+	EnvLocalhost:   "http://localhost:8081/",
+}
+
 // Environment
 func GetEnvironment() string {
 	return os.Getenv("ENVIRONMENT")
@@ -55,6 +62,10 @@ var (
 func GetBasePath() string {
 	d := path.Join(path.Dir(b))
 	return filepath.Dir(d)
+}
+
+func GetHtmlBasePath() string {
+	return HtmlBasePath[GetEnvironment()]
 }
 
 // Cors

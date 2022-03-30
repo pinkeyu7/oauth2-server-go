@@ -7,8 +7,8 @@ import (
 	"oauth2-server-go/pkg/er"
 	"oauth2-server-go/pkg/valider"
 
-	oauthClientRepo "oauth2-server-go/internal/oauth2/client/repository"
-	oauthClientSrv "oauth2-server-go/internal/oauth2/client/service"
+	oauthClientRepo "oauth2-server-go/internal/oauth/client/repository"
+	oauthClientSrv "oauth2-server-go/internal/oauth/client/service"
 
 	"github.com/gin-gonic/gin"
 )
