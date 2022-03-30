@@ -8,5 +8,5 @@ type Repository interface {
 	FindOne(m *model.OauthClient) (*model.OauthClient, error)
 	Count() (int, error)
 	Update(m *model.OauthClient) error
-	Delete(clientId int) error
+	Delete(clientId string) error
 }

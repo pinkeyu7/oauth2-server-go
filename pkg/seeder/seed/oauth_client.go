@@ -6,12 +6,16 @@ import (
 	"xorm.io/xorm"
 )
 
-func CreateOauthClient(engine *xorm.Engine, id, secret, domain, data string) error {
+func CreateOauthClient(engine *xorm.Engine, id, name, secret, domain, data string) error {
 	con := model.OauthClient{
-		Id:     id,
-		Secret: secret,
-		Domain: domain,
-		Data:   data,
+		Id:           id,
+		SysAccountId: 0,
+		Name:         name,
+		Secret:       secret,
+		Domain:       domain,
+		Scope:        "",
+		IconPath:     "",
+		Data:         data,
 	}
 
 	_, err := engine.Insert(&con)
@@ -21,9 +25,19 @@ func CreateOauthClient(engine *xorm.Engine, id, secret, domain, data string) err
 func AllOauthClient() []Seed {
 	return []Seed{
 		{
-			Name: "Create Oauth Client",
+			Name: "Create Oauth Client - address book api",
 			Run: func(engine *xorm.Engine) error {
-				err := CreateOauthClient(engine, "test_oauth_client_id", "test_oauth_client_secret", "http:localhost:9094", "")
+				err := CreateOauthClient(engine, "address-book-go", "Address Book API", "address-book-secret", "http:localhost:9094", "")
+				if err != nil {
+					return err
+				}
+				return nil
+			},
+		},
+		{
+			Name: "Create Oauth Client - billing api",
+			Run: func(engine *xorm.Engine) error {
+				err := CreateOauthClient(engine, "billing-go", "Billing API", "billing-secret", "http:localhost:9094", "")
 				if err != nil {
 					return err
 				}
