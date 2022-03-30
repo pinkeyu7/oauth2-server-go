@@ -11,6 +11,8 @@ const (
 	DataDuplicateError         = 400410
 	LimitExceededError         = 400001
 	DecryptError               = 400002
+	OauthClientDataError       = 400003
+	OauthValidateError         = 400004
 	UploadFileErrUnknown       = 400900
 	UploadFileErrNotExist      = 400901
 	UploadFileErrSizeOverLimit = 400902
@@ -24,4 +26,5 @@ const (
 	DBDeleteError              = 500003
 	DBDuplicateKeyError        = 500004
 	RedisSerError              = 500005
+	OauthUnknownError          = 500006
 )

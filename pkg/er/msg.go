@@ -11,6 +11,8 @@ var msg = map[int]string{
 	DataDuplicateError:         "Data duplicate error",
 	LimitExceededError:         "Limit exceeded error",
 	DecryptError:               "Decrypt error",
+	OauthClientDataError:       "Oauth client data invalid error",
+	OauthValidateError:         "Oauth validate error",
 	UnknownError:               "Database unknown error",
 	DBInsertError:              "Database insertion error",
 	DBUpdateError:              "Database update error",
@@ -24,4 +26,5 @@ var msg = map[int]string{
 	UploadFileErrEmpty:         "File is empty",
 	UploadFileErrTypeNotMatch:  "File type not match",
 	UploadFileErrRowOverLimit:  "File row over limit",
+	OauthUnknownError:          "Oauth unknown error",
 }
