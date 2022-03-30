@@ -44,6 +44,14 @@ func main() {
 
 	gofakeit.Seed(time.Now().Unix())
 
+	// Create Sys Account
+	sysAccountSeeds := seed.AllSysAccount()
+	run(engine, sysAccountSeeds)
+
+	// Create User
+	userSeeds := seed.AllUser()
+	run(engine, userSeeds)
+
 	// Create Oauth Client
 	oauthClientSeeds := seed.AllOauthClient()
 	run(engine, oauthClientSeeds)
