@@ -55,7 +55,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	account := c.PostForm("username")
+	account := c.PostForm("account")
 	password := c.PostForm("password")
 
 	env := api.GetEnv()
