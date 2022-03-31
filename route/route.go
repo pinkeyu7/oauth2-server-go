@@ -40,5 +40,8 @@ func Init() *gin.Engine {
 	// Oauth client and scope api
 	OauthClientV1(r)
 
+	// Oauth Authentication api
+	UserV1(r)
+
 	return r
 }
