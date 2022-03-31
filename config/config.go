@@ -29,10 +29,7 @@ var EnvShortName = map[string]string{
 }
 
 var HtmlBasePath = map[string]string{
-	EnvProduction:  "https://oauth.indochat.net/",
-	EnvStaging:     "https://oauth-staging.indochat.net/",
-	EnvDevelopment: "https://oauth-development.indochat.net/",
-	EnvLocalhost:   "http://localhost:8081/",
+	EnvLocalhost: "http://localhost:8080/",
 }
 
 // Environment

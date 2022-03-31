@@ -8,8 +8,8 @@ import (
 
 type Service interface {
 	List(req *apireq.ListOauthClient) (*apires.ListOauthClient, error)
-	Get(contactId int) (*model.OauthClient, error)
+	Get(clientId int) (*model.OauthClient, error)
 	Add(req *apireq.AddOauthClient) error
-	Edit(contactId int, req *apireq.EditOauthClient) error
-	Delete(contactId int) error
+	Edit(clientId int, req *apireq.EditOauthClient) error
+	Delete(clientId int) error
 }

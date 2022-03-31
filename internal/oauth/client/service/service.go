@@ -21,7 +21,7 @@ func (s *Service) List(req *apireq.ListOauthClient) (*apires.ListOauthClient, er
 	return nil, nil
 }
 
-func (s *Service) Get(contactId int) (*model.OauthClient, error) {
+func (s *Service) Get(clientId int) (*model.OauthClient, error) {
 	return nil, nil
 }
 
@@ -29,10 +29,10 @@ func (s *Service) Add(req *apireq.AddOauthClient) error {
 	return nil
 }
 
-func (s *Service) Edit(contactId int, req *apireq.EditOauthClient) error {
+func (s *Service) Edit(clientId int, req *apireq.EditOauthClient) error {
 	return nil
 }
 
-func (s *Service) Delete(contactId int) error {
+func (s *Service) Delete(clientId int) error {
 	return nil
 }
