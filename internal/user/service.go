@@ -5,6 +5,6 @@ import (
 )
 
 type Service interface {
-	Get(userId int) (*model.User, error)
+	Get(account string) (*model.User, error)
 	Verify(account, password string) error
 }

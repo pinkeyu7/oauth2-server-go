@@ -18,8 +18,8 @@ func NewService(ur user.Repository) user.Service {
 	}
 }
 
-func (s *Service) Get(userId int) (*model.User, error) {
-	usr, err := s.userRepo.FindOne(&model.User{Id: userId})
+func (s *Service) Get(account string) (*model.User, error) {
+	usr, err := s.userRepo.FindOne(&model.User{Account: account})
 	if err != nil {
 		findErr := er.NewAppErr(http.StatusInternalServerError, er.UnknownError, "find user error.", err)
 		return nil, findErr
