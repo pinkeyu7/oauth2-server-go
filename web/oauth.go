@@ -1,13 +1,14 @@
 package web
 
 import (
-	"fmt"
 	"net/http"
 	"oauth2-server-go/api"
 	"oauth2-server-go/config"
 	"oauth2-server-go/dto/apires"
 	clientRepo "oauth2-server-go/internal/oauth/client/repository"
 	oauthLib "oauth2-server-go/internal/oauth/library"
+	userRepo "oauth2-server-go/internal/user/repository"
+	userSrv "oauth2-server-go/internal/user/service"
 	"oauth2-server-go/pkg/er"
 
 	"github.com/gin-gonic/gin"
@@ -38,6 +39,8 @@ func LoginHandler(c *gin.Context) {
 func AuthHandler(c *gin.Context) {
 	env := api.GetEnv()
 	ocr := clientRepo.NewRepository(env.Orm)
+	ur := userRepo.NewRepository(env.Orm)
+	us := userSrv.NewService(ur)
 
 	// 驗證 Oauth 資訊
 	store, client, redirectUri, err := oauthLib.Validation(c, ocr)
@@ -54,13 +57,11 @@ func AuthHandler(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(account)
-
-	//usr, err := us.FindUserByPhone(phone)
-	//if err != nil {
-	//	_ = c.Error(err)
-	//	return
-	//}
+	_, err = us.Get(account)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
 
 	scopes := []*apires.Scope{
 		{
