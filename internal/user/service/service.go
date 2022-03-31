@@ -19,7 +19,17 @@ func NewService(ur user.Repository) user.Service {
 }
 
 func (s *Service) Get(userId int) (*model.User, error) {
-	return nil, nil
+	usr, err := s.userRepo.FindOne(&model.User{Id: userId})
+	if err != nil {
+		findErr := er.NewAppErr(http.StatusInternalServerError, er.UnknownError, "find user error.", err)
+		return nil, findErr
+	}
+
+	if usr == nil {
+		notFoundErr := er.NewAppErr(http.StatusBadRequest, er.ResourceNotFoundError, "user not found.", nil)
+		return nil, notFoundErr
+	}
+	return usr, nil
 }
 
 func (s *Service) Verify(account, password string) error {
