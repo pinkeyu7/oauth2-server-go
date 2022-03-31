@@ -158,7 +158,7 @@ func TestRepository_Update(t *testing.T) {
 	assert.Nil(t, err)
 
 	// Teardown
-	_, _ = orm.Update(&cli)
+	_, _ = orm.Where("id = ? ", oauthClientId).Update(&cli)
 }
 
 func TestRepository_Delete(t *testing.T) {
