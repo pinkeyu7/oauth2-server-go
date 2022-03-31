@@ -86,10 +86,11 @@ func GetCorsRule(origin string) bool {
 
 func InitEnv() {
 	remoteBranch := os.Getenv("REMOTE_BRANCH")
-
 	if remoteBranch == "" {
 		// load env from .env file
-		err := godotenv.Load()
+		// load env from .env file
+		path := GetBasePath() + "/.env"
+		err := godotenv.Load(path)
 		if err != nil {
 			log.Panicln(err)
 		}
