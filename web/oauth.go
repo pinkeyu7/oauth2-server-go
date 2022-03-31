@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 	"oauth2-server-go/api"
 	"oauth2-server-go/config"
@@ -25,7 +26,6 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	pageData := apires.OauthLoginPage{
-		HostIconPath: client.IconPath,
 		ClientName:   client.Name,
 		AccountError: false,
 		RedirectUrl:  redirectUri,
@@ -33,4 +33,58 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "login.tmpl", pageData)
+}
+
+func AuthHandler(c *gin.Context) {
+	env := api.GetEnv()
+	ocr := oauthClientRepo.NewRepository(env.Orm)
+
+	// 驗證 Oauth 資訊
+	store, client, redirectUri, err := oauthLib.Validation(c, ocr)
+	if err != nil {
+		clientErr := er.NewAppErr(http.StatusBadRequest, er.OauthClientDataError, "", err)
+		_ = c.Error(clientErr)
+		return
+	}
+
+	// 驗證是否完成登入，並取得電話號碼
+	account, isPass := oauthLib.ValidateLogin(store)
+	if !isPass {
+		c.Redirect(http.StatusFound, oauthLib.LoginUrl)
+		return
+	}
+
+	fmt.Println(account)
+
+	//usr, err := us.FindUserByPhone(phone)
+	//if err != nil {
+	//	_ = c.Error(err)
+	//	return
+	//}
+
+	scopes := []*apires.Scope{
+		{
+			Name:   "Name",
+			Detail: "",
+		},
+		{
+			Name:   "Public Profile",
+			Detail: "",
+		},
+		{
+			Name:   "Email Address",
+			Detail: "",
+		},
+	}
+
+	pageData := apires.OauthAuthPage{
+		ClientIconPath: client.IconPath,
+		ClientName:     client.Name,
+		RedirectUrl:    redirectUri,
+		Scopes:         scopes,
+		UserName:       "the user name",
+		BasePath:       config.GetHtmlBasePath(),
+	}
+
+	c.HTML(http.StatusOK, "auth.tmpl", pageData)
 }

@@ -92,3 +92,42 @@ func LoginHandler(c *gin.Context) {
 
 	c.Redirect(http.StatusMovedPermanently, oauthLib.AuthUrl)
 }
+
+func UserAuthHandler(c *gin.Context) {
+	// 驗證 Oauth 資訊
+	env := api.GetEnv()
+	ocr := oauthClientRepo.NewRepository(env.Orm)
+	store, _, _, err := oauthLib.Validation(c, ocr)
+	if err != nil {
+		clientErr := er.NewAppErr(http.StatusBadRequest, er.OauthClientDataError, "", err)
+		_ = c.Error(clientErr)
+		return
+	}
+
+	// 驗證是否完成登入
+	_, isPass := oauthLib.ValidateLogin(store)
+	if !isPass {
+		validateErr := er.NewAppErr(http.StatusBadRequest, er.OauthValidateError, "Oauth login validate error", err)
+		_ = c.Error(validateErr)
+		return
+	}
+
+	store.Set("AuthorizationStatus", oauthLib.StatusAuthorized)
+	err = store.Save()
+	if err != nil {
+		storeErr := er.NewAppErr(http.StatusInternalServerError, er.OauthUnknownError, err.Error(), err)
+		_ = c.Error(storeErr)
+		return
+	}
+
+	c.Redirect(http.StatusMovedPermanently, oauthLib.AuthorizeUrl)
+}
+
+func TokenHandler(c *gin.Context) {
+	err := oauthLib.Srv.HandleTokenRequest(c.Writer, c.Request)
+	if err != nil {
+		paramErr := er.NewAppErr(http.StatusBadRequest, er.ErrorParamInvalid, err.Error(), err)
+		_ = c.Error(paramErr)
+		return
+	}
+}
