@@ -1,6 +1,7 @@
-package oauthLibrary
+package library
 
 import (
+	"net/http"
 	"oauth2-server-go/dto/model"
 	"oauth2-server-go/pkg/er"
 	"strings"
@@ -79,7 +80,7 @@ func GenerateScopeList(scopes []string) (*model.ScopeList, error) {
 			return nil, err
 		}
 		if level != 2 {
-			notMatchErr := er.NewAppErr(400, er.ErrorParamInvalid, "scope level error.", nil)
+			notMatchErr := er.NewAppErr(http.StatusBadRequest, er.ErrorParamInvalid, "scope level error.", nil)
 			return nil, notMatchErr
 		}
 
@@ -108,7 +109,7 @@ func ParseScope(scope string) (int, string, string, error) {
 	var item string
 
 	if len(scope) == 0 {
-		emptyErr := er.NewAppErr(400, er.ErrorParamInvalid, "scope empty error.", nil)
+		emptyErr := er.NewAppErr(http.StatusBadRequest, er.ErrorParamInvalid, "scope empty error.", nil)
 		return 0, "", "", emptyErr
 	}
 
@@ -122,7 +123,7 @@ func ParseScope(scope string) (int, string, string, error) {
 		category = arr[0]
 		item = arr[1]
 	default:
-		formatErr := er.NewAppErr(400, er.ErrorParamInvalid, "scope format error.", nil)
+		formatErr := er.NewAppErr(http.StatusBadRequest, er.ErrorParamInvalid, "scope format error.", nil)
 		return 0, "", "", formatErr
 	}
 	return level, category, item, nil

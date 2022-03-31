@@ -1,4 +1,4 @@
-package oauthLibrary
+package library
 
 import (
 	"encoding/json"

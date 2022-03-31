@@ -1,4 +1,4 @@
-package oauthClient
+package client
 
 import "oauth2-server-go/dto/model"
 
