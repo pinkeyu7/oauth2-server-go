@@ -27,12 +27,12 @@ type StoreItem struct {
 
 // NewStore create mysql store instance,
 // db xorm.EngineGroup,
-// tableName table name (default oauth2_token),
+// tableName table name (default oauth_token),
 // GC time interval (in seconds, default 600)
 func NewStore(orm *xorm.EngineGroup, tableName string, gcInterval int, autoMigrate bool) *Store {
 	store := &Store{
 		orm:       orm,
-		tableName: "oauth2_token",
+		tableName: "oauth_token",
 		stdout:    os.Stderr,
 	}
 

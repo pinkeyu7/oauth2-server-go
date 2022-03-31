@@ -34,7 +34,7 @@ func TestGenerateScopeList(t *testing.T) {
 	}
 
 	// Act
-	scopeList, err := GenerateScopeList(scopes)
+	_, err := GenerateScopeList(scopes)
 
 	// Assert
 	assert.NotNil(t, err)
@@ -50,7 +50,7 @@ func TestGenerateScopeList(t *testing.T) {
 	}
 
 	// Act
-	scopeList, err = GenerateScopeList(scopes)
+	scopeList, err := GenerateScopeList(scopes)
 
 	// Assert
 	assert.Nil(t, err)

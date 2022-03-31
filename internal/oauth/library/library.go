@@ -35,7 +35,7 @@ func InitOauth2() {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 
-	store := oauthXorm.NewStore(env.Orm, "", 0, true)
+	store := oauthXorm.NewStore(env.Orm, "", 0, false)
 	manager.MapTokenStorage(store)
 
 	// generate jwt access token
