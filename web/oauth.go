@@ -6,7 +6,7 @@ import (
 	"oauth2-server-go/api"
 	"oauth2-server-go/config"
 	"oauth2-server-go/dto/apires"
-	oauthClientRepo "oauth2-server-go/internal/oauth/client/repository"
+	clientRepo "oauth2-server-go/internal/oauth/client/repository"
 	oauthLib "oauth2-server-go/internal/oauth/library"
 	"oauth2-server-go/pkg/er"
 
@@ -15,7 +15,7 @@ import (
 
 func LoginHandler(c *gin.Context) {
 	env := api.GetEnv()
-	ocr := oauthClientRepo.NewRepository(env.Orm)
+	ocr := clientRepo.NewRepository(env.Orm)
 
 	// 驗證 Oauth 資訊
 	_, client, redirectUri, err := oauthLib.Validation(c, ocr)
@@ -37,7 +37,7 @@ func LoginHandler(c *gin.Context) {
 
 func AuthHandler(c *gin.Context) {
 	env := api.GetEnv()
-	ocr := oauthClientRepo.NewRepository(env.Orm)
+	ocr := clientRepo.NewRepository(env.Orm)
 
 	// 驗證 Oauth 資訊
 	store, client, redirectUri, err := oauthLib.Validation(c, ocr)

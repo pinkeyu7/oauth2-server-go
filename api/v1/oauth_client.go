@@ -7,8 +7,8 @@ import (
 	"oauth2-server-go/pkg/er"
 	"oauth2-server-go/pkg/valider"
 
-	oauthClientRepo "oauth2-server-go/internal/oauth/client/repository"
-	oauthClientSrv "oauth2-server-go/internal/oauth/client/service"
+	clientRepo "oauth2-server-go/internal/oauth/client/repository"
+	clientSrv "oauth2-server-go/internal/oauth/client/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,8 +46,8 @@ func AddOauthClient(c *gin.Context) {
 	}
 
 	env := api.GetEnv()
-	ocr := oauthClientRepo.NewRepository(env.Orm)
-	ocs := oauthClientSrv.NewService(ocr)
+	ocr := clientRepo.NewRepository(env.Orm)
+	ocs := clientSrv.NewService(ocr)
 	err = ocs.Add(&req)
 	if err != nil {
 		_ = c.Error(err)

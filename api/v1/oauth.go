@@ -6,7 +6,7 @@ import (
 	"oauth2-server-go/api"
 	"oauth2-server-go/config"
 	"oauth2-server-go/dto/apires"
-	oauthClientRepo "oauth2-server-go/internal/oauth/client/repository"
+	clientRepo "oauth2-server-go/internal/oauth/client/repository"
 	oauthLib "oauth2-server-go/internal/oauth/library"
 	userRepo "oauth2-server-go/internal/user/repository"
 	userSrv "oauth2-server-go/internal/user/service"
@@ -61,7 +61,7 @@ func LoginHandler(c *gin.Context) {
 	password := c.PostForm("password")
 
 	env := api.GetEnv()
-	ocr := oauthClientRepo.NewRepository(env.Orm)
+	ocr := clientRepo.NewRepository(env.Orm)
 	store, client, redirectUri, err := oauthLib.Validation(c, ocr)
 	if err != nil {
 		clientErr := er.NewAppErr(http.StatusBadRequest, er.OauthClientDataError, "", err)
@@ -99,7 +99,7 @@ func LoginHandler(c *gin.Context) {
 func UserAuthHandler(c *gin.Context) {
 	// 驗證 Oauth 資訊
 	env := api.GetEnv()
-	ocr := oauthClientRepo.NewRepository(env.Orm)
+	ocr := clientRepo.NewRepository(env.Orm)
 	store, _, _, err := oauthLib.Validation(c, ocr)
 	if err != nil {
 		clientErr := er.NewAppErr(http.StatusBadRequest, er.OauthClientDataError, "", err)

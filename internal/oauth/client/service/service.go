@@ -4,14 +4,14 @@ import (
 	"oauth2-server-go/dto/apireq"
 	"oauth2-server-go/dto/apires"
 	"oauth2-server-go/dto/model"
-	oauthClient "oauth2-server-go/internal/oauth/client"
+	"oauth2-server-go/internal/oauth/client"
 )
 
 type Service struct {
-	clientRepo oauthClient.Repository
+	clientRepo client.Repository
 }
 
-func NewService(ocr oauthClient.Repository) oauthClient.Service {
+func NewService(ocr client.Repository) client.Service {
 	return &Service{
 		clientRepo: ocr,
 	}

@@ -2,7 +2,7 @@ package repository
 
 import (
 	"oauth2-server-go/dto/model"
-	oauthClient "oauth2-server-go/internal/oauth/client"
+	"oauth2-server-go/internal/oauth/client"
 
 	"xorm.io/xorm"
 )
@@ -11,7 +11,7 @@ type Repository struct {
 	orm *xorm.EngineGroup
 }
 
-func NewRepository(orm *xorm.EngineGroup) oauthClient.Repository {
+func NewRepository(orm *xorm.EngineGroup) client.Repository {
 	return &Repository{
 		orm: orm,
 	}
