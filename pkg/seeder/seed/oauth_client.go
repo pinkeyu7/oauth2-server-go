@@ -1,6 +1,7 @@
 package seed
 
 import (
+	"encoding/json"
 	"oauth2-server-go/dto/model"
 
 	"xorm.io/xorm"
@@ -13,10 +14,13 @@ func CreateOauthClient(engine *xorm.Engine, id, name, secret, domain, data strin
 		Name:         name,
 		Secret:       secret,
 		Domain:       domain,
-		Scope:        "",
+		Scope:        "all",
 		IconPath:     "",
 		Data:         data,
 	}
+
+	jsonData, _ := json.Marshal(con)
+	con.Data = string(jsonData)
 
 	_, err := engine.Insert(&con)
 	return err
