@@ -8,6 +8,8 @@ import (
 	"oauth2-server-go/dto/apires"
 	oauthClientRepo "oauth2-server-go/internal/oauth/client/repository"
 	oauthLib "oauth2-server-go/internal/oauth/library"
+	userRepo "oauth2-server-go/internal/user/repository"
+	userSrv "oauth2-server-go/internal/user/service"
 	"oauth2-server-go/pkg/er"
 	"oauth2-server-go/pkg/logr"
 
@@ -68,9 +70,10 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	// 驗證登入資訊
-	//ur := userRepo.NewMysqlUserRepo(env.Orm)
-	//_, err = oas.VerifyLogin(phone, pinCode)
-	if account != "test" || password != "test" {
+	ur := userRepo.NewRepository(env.Orm)
+	us := userSrv.NewService(ur)
+	err = us.Verify(account, password)
+	if err != nil {
 		pageData := apires.OauthLoginPage{
 			HostIconPath: client.IconPath,
 			ClientName:   client.Name,
