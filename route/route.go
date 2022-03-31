@@ -33,6 +33,11 @@ func Init() *gin.Engine {
 	corsConf.AllowOriginFunc = config.GetCorsRule
 	r.Use(cors.New(corsConf))
 
+	// Oauth authentication flow
+	OauthV1(r)
+	OauthWebV1(r)
+
+	// Oauth client and scope api
 	OauthClientV1(r)
 
 	return r
