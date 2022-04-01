@@ -170,7 +170,79 @@
 
    ![arch](./web/static/swagger-user-response.png)
 
-6. 使用瀏覽器打開 [http://localhost:9094/refresh](http://localhost:9094/refresh)，透過 refresh 機制來取得新的 token。
+6. 使用瀏覽器打開 [http://localhost:9094/refresh](http://localhost:9094/refresh) ，透過 refresh 機制來取得新的 token。
+
+## Oauth Scope Handling
+
+假定目前有一個 app 想要取得 使用者資料 以及 聯絡人資料，但是並沒有新增的權限，scope 的處理方式如下。
+
+1. 從 oauth_client 取得 client app 的資料，並從 scope 取得列表。
+
+   | Scope                     | Authorized |
+   | ------------------------- | :--------: |
+   | user.profile_get          |    Yes     |
+   | address-book.list_get     |    Yes     |
+   | address-book.contact_post |     No     |
+   | address-book.contact_get  |    Yes     |
+
+2. 從 oauth_scope 取得所有的 scope 列表，建成樹狀表單，搭配從 client app 取得的授權資料，生成 client app 的 scope tree。
+
+   Scope List
+
+   - user
+     - user.profile_get
+   - address-book
+     - address-book.list_get
+     - address-book.contact_post
+     - address-book.contact_get
+
+   Scope list in JSON
+
+   ```JSON
+   {
+    "address-book": {
+        "name": "address-book",
+        "items": {
+            "contact_get": {
+                "name": "contact_get",
+                "is_auth": true
+            },
+            "contact_post": {
+                "name": "contact_post",
+                "is_auth": false
+            },
+            "list_get": {
+                "name": "list_get",
+                "is_auth": true
+            }
+        },
+        "is_auth": false
+    },
+    "user": {
+        "name": "user",
+        "items": {
+            "profile_get": {
+                "name": "profile_get",
+                "is_auth": true
+            }
+        },
+        "is_auth": false
+    }
+   }
+   ```
+
+3. Scope validation flow
+
+   ```
+    Oauth2Middleware
+        1. check token, get claims
+        2. check scope
+            a. find scope by path
+            b. verify scope is authorized
+                - get scope tree from redis
+                - if scope tree not found from redis, build one by mysql data)
+                - check scope
+   ```
 
 ## GO
 
