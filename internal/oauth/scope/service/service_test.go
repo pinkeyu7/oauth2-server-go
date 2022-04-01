@@ -9,6 +9,7 @@ import (
 	"oauth2-server-go/pkg/er"
 	"oauth2-server-go/pkg/valider"
 	"os"
+	"strconv"
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -41,7 +42,7 @@ func TestService_GetScope(t *testing.T) {
 	assert.NotNil(t, err)
 	notFoundErr := err.(*er.AppError)
 	assert.Equal(t, http.StatusBadRequest, notFoundErr.StatusCode)
-	assert.Equal(t, er.ResourceNotFoundError, notFoundErr.Code)
+	assert.Equal(t, strconv.Itoa(er.ResourceNotFoundError), notFoundErr.Code)
 
 	// Act
 	scope, err := oss.GetScope("/v1/users", "GET")
@@ -59,7 +60,7 @@ func TestService_VerifyScope(t *testing.T) {
 	osr := scopeRepo.NewRepository(orm, osc)
 	oss := NewService(osr, osc, ocr)
 
-	clientId := "Test9999"
+	clientId := "address-book-go"
 	scope := "user.profile_get"
 
 	isPass, err := oss.VerifyScope(clientId, scope)

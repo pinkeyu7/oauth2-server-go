@@ -43,10 +43,10 @@ func TestService_Get(t *testing.T) {
 	us := NewService(ur)
 
 	// No data
-	userId := 10
+	account := "user"
 
 	// Act
-	usr, err := us.Get(userId)
+	usr, err := us.Get(account)
 
 	// Assert
 	assert.NotNil(t, err)
@@ -56,14 +56,14 @@ func TestService_Get(t *testing.T) {
 	assert.Equal(t, strconv.Itoa(er.ResourceNotFoundError), notFoundErr.Code)
 
 	// Has data
-	userId = 1
+	account = "user_1"
 
 	// Act
-	usr, err = us.Get(userId)
+	usr, err = us.Get(account)
 
 	// Assert
 	assert.Nil(t, err)
-	assert.Equal(t, userId, usr.Id)
+	assert.Equal(t, account, usr.Account)
 }
 
 func TestService_Verify(t *testing.T) {
