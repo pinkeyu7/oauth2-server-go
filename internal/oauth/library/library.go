@@ -44,13 +44,9 @@ func InitOauth2() {
 	clientStore, _ := oauthXorm.NewClientStore(env.Orm, oauthXorm.WithClientStoreTableName("oauth_client"))
 	manager.MapClientStorage(clientStore)
 
-	cfg := server.NewConfig()
-	cfg.AllowedGrantTypes = []oauth2.GrantType{
-		oauth2.AuthorizationCode,
-		oauth2.Refreshing,
-	}
+	Srv = server.NewServer(server.NewConfig(), manager)
 
-	Srv = server.NewServer(cfg, manager)
+	Srv.SetAllowedGrantType(oauth2.AuthorizationCode, oauth2.Refreshing)
 
 	Srv.SetUserAuthorizationHandler(userAuthorizeHandler)
 
