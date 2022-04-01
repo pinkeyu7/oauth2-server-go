@@ -2,6 +2,10 @@
 
 這是一個 Oauth2 Server 實作的練習，參考 [go-oauth2/oauth2](https://github.com/go-oauth2/oauth2) 的範例，實作的是 Authorization Code Flow，並以 mysql 來儲存 client 及 scope 等資料。
 
+## 感謝
+
+`Oauth2-server-go` 參照 [Rainlay](https://github.com/rainlay) 過去的開發專案，其中 [go-oauth2-xorm](https://github.com/rainlay/go-oauth2-xorm) 已經被加入 [go-oauth2/oauth2](https://github.com/go-oauth2/oauth2) 的 文件中，透過實作了解 Oauth Authorization Code Flow 的運作機制，獲益良多。
+
 ## Oauth Authorization Code Flow
 
 ![arch](./web/static/auth-sequence-auth-code.png)
